@@ -37,3 +37,10 @@ export const register = async (req, res) => {
      }
      sendCookie(user, res, `welcome back, ${user.name}`, 200)
  }
+
+ export const logout = (req,res)=>{
+    res.status(200).cookie("token", "", {expires: new Date(Date.now())})
+    .json({
+        success: true,
+    })
+ }
