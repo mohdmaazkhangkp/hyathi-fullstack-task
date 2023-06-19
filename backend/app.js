@@ -2,6 +2,7 @@ import cookieParser from 'cookie-parser';
 import { config } from 'dotenv';
 import express from 'express';
 import userRouter from "./routes/user.js"
+import pokemonRouter from "./routes/pokemon.js"
 import cors from "cors"
 
 export const app = express();
@@ -22,6 +23,7 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/pokemon", pokemonRouter);
 
 
 // using routes

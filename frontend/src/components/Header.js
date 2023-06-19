@@ -14,7 +14,7 @@ const Header = () => {
   const logoutHandler = async () => {
     setLoading(true);
     try {
-      await axios.post(`${server}/users/logout`, {
+      await axios.get(`${server}/users/logout`, {
         withCredentials: true,
       });
 
@@ -78,7 +78,7 @@ const Header = () => {
           </Link>
           </>
         ) : (
-          <Button disables={loading} onClick={logoutHandler} variant="outlined" sx={{ my: 1, mx: 1.5 }}>
+          <Button disabled={loading} onClick={logoutHandler} variant="outlined" sx={{ my: 1, mx: 1.5 }}>
             Logout
           </Button>
         )}
