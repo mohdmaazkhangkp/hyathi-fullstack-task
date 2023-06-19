@@ -42,14 +42,14 @@ const Header = () => {
         </Typography>
         </Link>
         {isAuthenticated  && <nav>
-          <Link to={"/adopted"}>
+          <Link to={"/my"}>
           <Typography
             variant="button"
             color="text.primary"
             
             sx={{ my: 1, mx: 1.5 }}
           >
-            Adopted
+            My Pokemon
           </Typography>
           </Link>
           <Link to={"/all"}>
@@ -58,8 +58,17 @@ const Header = () => {
             color="text.primary"
             sx={{ my: 1, mx: 1.5 }}
           >
-            All
+            All Pokemon
           </Typography>
+          </Link>
+          <Link to={"/profile"}>
+            <Typography
+              variant="button"
+              color="text.primary"
+              sx={{ my: 1, mx: 1.5 }}
+            >
+              Profile
+            </Typography>
           </Link>
           
         </nav>}

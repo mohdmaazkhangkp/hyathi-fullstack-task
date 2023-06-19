@@ -1,10 +1,35 @@
 import { Button, Card, CardActions, CardContent, Grid, Typography } from '@mui/material'
+import axios from 'axios';
 import React, { useState } from 'react'
+import toast from 'react-hot-toast';
+import { server } from '..';
 
 const PokemonCard = ({ name, breed, age, healthStatus }) => {
     const [adopted, setAdopted] = useState(false);
-    const clickHandler = ()=>{
-        setAdopted(true)
+    const clickHandler = async()=>{
+        setAdopted(true);
+        try {
+            
+            const { data } = await axios.post(
+                `${server}/pokemon/adopt`,
+                {
+                    name, breed, age, healthStatus 
+
+                },
+                {
+                    withCredentials: true,
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            toast.success(data.message);
+            
+        } catch (error) {
+            toast.error(error.response.data.message);
+            
+        }
     }
 
   return (

@@ -1,6 +1,7 @@
 import { Container, Grid } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast';
 import { server } from '..';
 import PokemonCard from '../components/PokemonCard';
 
@@ -22,8 +23,8 @@ const AllPage = () => {
       setAllPokemon(data.pokemon)
       
       
-    } catch (error) {
-
+    } catch (e) {
+      toast.error(e.response.data.message);
     }
   }
 

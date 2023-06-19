@@ -3,7 +3,7 @@ import { Adopted } from "../models/adopted.js";
 
 export const allPokemon = async (req, res) => {
     let availablePokemon = dummyPokemonArray;
-
+    
     res.status(200)
         .json({
             success: true,
@@ -24,6 +24,21 @@ export const adopt = async (req, res, next) => {
             message: "Adopted Successfully",
         });
     } catch (error) {
-        next(error);
+        
+    }
+};
+
+export const getMyPokemon = async (req, res, next) => {
+    try {
+        const userid = req.user._id;
+
+        const adoptedPokemon = await Adopted.find({ user: userid });
+
+        res.status(200).json({
+            success: true,
+            adoptedPokemon,
+        });
+    } catch (error) {
+       
     }
 };
