@@ -2,8 +2,12 @@ import { dummyPokemonArray } from "../data/pokemonData.js"
 import { Adopted } from "../models/adopted.js";
 
 export const allPokemon = async (req, res) => {
-    let availablePokemon = dummyPokemonArray;
     
+    const adoptedPokemon = await Adopted.find({ });
+
+    //to find all pokemon which is not adapted by any user yet
+    const availablePokemon = dummyPokemonArray.filter((element) => !adoptedPokemon.find(obj => obj.name === element.name ));
+
     res.status(200)
         .json({
             success: true,

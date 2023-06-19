@@ -15,7 +15,7 @@ import ProfilePage from "./pages/ProfilePage";
 
 function App() {
 
-  const { setUser, setIsAuthenticated, setLoading } = useContext(Context);
+  const { setUser,isAuthenticated, setIsAuthenticated } = useContext(Context);
 
   useEffect(() => {
     
@@ -33,7 +33,7 @@ function App() {
         setIsAuthenticated(false);
         
       });
-  }, []);
+  }, [isAuthenticated]);
 
   return (
     <Router>

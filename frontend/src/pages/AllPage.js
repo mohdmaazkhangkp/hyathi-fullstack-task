@@ -1,4 +1,4 @@
-import { Container, Grid } from '@mui/material';
+import { Container, Grid, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
@@ -29,19 +29,22 @@ const AllPage = () => {
   }
 
   return (
-    // <div>
-    //   {allPokemon.map((p) => (
-    //     <PokemonCard key={p.name} {...p} />
-    //   ))}
-    // </div>
+   
 
-    <Container sx={{ py: 8 }} maxWidth="md">
-      {/* End hero unit */}
-      <Grid container spacing={4}>
+    <Container sx={{ py: 4 }} maxWidth="md">
+      <Typography textAlign="center" gutterBottom variant="h4" component="h2"mb={4}>
+        All Available Pokemon
+      </Typography>
+      {allPokemon.length > 0 ? <Grid container spacing={4}>
         {allPokemon.map((p) => (
-          <PokemonCard key={p.name} {...p} adopted={false} />
+          <PokemonCard key={p.name} {...p} isAllPage={true} />
         ))}
+
       </Grid>
+        :
+        <Typography textAlign="center" gutterBottom variant="body1" component="h5" mb={4}>
+          All the Pokemon have been adapted
+        </Typography>}
     </Container>
 
   );

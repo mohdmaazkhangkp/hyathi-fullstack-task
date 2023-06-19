@@ -4,9 +4,10 @@ import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 import { server } from '..';
 
-const PokemonCard = ({ name, breed, age, healthStatus }) => {
+const PokemonCard = ({ name, breed, age, healthStatus, isAllPage }) => {
     const [adopted, setAdopted] = useState(false);
-    const clickHandler = async()=>{
+
+    const adpotHandler = async()=>{
         setAdopted(true);
         try {
             
@@ -32,6 +33,9 @@ const PokemonCard = ({ name, breed, age, healthStatus }) => {
         }
     }
 
+    const feedHandler = ()=>{
+        
+    }
   return (
       <Grid item xs={12} sm={6} md={4}>
           <Card
@@ -55,9 +59,14 @@ const PokemonCard = ({ name, breed, age, healthStatus }) => {
                       healthStatus: {healthStatus}
                   </Typography>
               </CardContent>
-              <CardActions>
-                  <Button disabled={adopted} onClick={clickHandler} variant="contained" size="medium" sx={{width:"100%"}}>Adopt</Button>
-              </CardActions>
+              {isAllPage ? (<CardActions>
+                  <Button disabled={adopted} onClick={adpotHandler} variant="contained" size="medium" sx={{width:"100%"}}>Adopt</Button>
+              </CardActions>):
+              (
+                      <CardActions>
+                          <Button onClick={feedHandler}  variant="contained" size="medium" sx={{ width: "100%" }}>Feed</Button>
+                      </CardActions>
+              )}
           </Card>
       </Grid>
   )

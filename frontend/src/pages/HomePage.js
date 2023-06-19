@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { Navigate } from 'react-router-dom';
 import { Context } from '..';
 
 const HomePage = () => {
@@ -7,9 +8,9 @@ const HomePage = () => {
   return (
     <div>
       {!isAuthenticated ? (
-        <div> please login</div>
+        <Navigate to={"/login"} />
       ) : (
-        <div>welcome</div>
+          <Navigate to={"/my"} />
       )}
     </div>
   );
