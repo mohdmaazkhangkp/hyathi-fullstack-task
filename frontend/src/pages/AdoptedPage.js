@@ -15,6 +15,7 @@ const AdoptedPage = () => {
       .then((res) => {
         
         setPokemon(res.data.adoptedPokemon);
+        
       })
       .catch((e) => {
         toast.error(e.response.data.message);

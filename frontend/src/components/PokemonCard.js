@@ -4,8 +4,9 @@ import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 import { server } from '..';
 
-const PokemonCard = ({ name, breed, age, healthStatus, isAllPage }) => {
+const PokemonCard = ({ name, breed, age, healthStatus, isAllPage, _id }) => {
     const [adopted, setAdopted] = useState(false);
+    const [healthStatusHere, setHealthStatusHere] = useState(healthStatus);
 
     const adpotHandler = async()=>{
         setAdopted(true);
@@ -33,8 +34,22 @@ const PokemonCard = ({ name, breed, age, healthStatus, isAllPage }) => {
         }
     }
 
-    const feedHandler = ()=>{
+    const feedHandler = async()=>{
         
+        try {
+            const { data } = await axios.put(
+                `${server}/pokemon/${_id}`,
+                {},
+                {
+                    withCredentials: true,
+                }
+            );
+            setHealthStatusHere(100)
+            toast.success(data.message);
+
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }
     }
   return (
       <Grid item xs={12} sm={6} md={4}>
@@ -56,7 +71,7 @@ const PokemonCard = ({ name, breed, age, healthStatus, isAllPage }) => {
                   </Typography>
                   <Typography>
                       
-                      healthStatus: {healthStatus}
+                      healthStatus: {healthStatusHere}
                   </Typography>
               </CardContent>
               {isAllPage ? (<CardActions>

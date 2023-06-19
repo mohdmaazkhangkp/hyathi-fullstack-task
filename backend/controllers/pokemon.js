@@ -37,12 +37,29 @@ export const getMyPokemon = async (req, res, next) => {
         const userid = req.user._id;
 
         const adoptedPokemon = await Adopted.find({ user: userid });
-
         res.status(200).json({
             success: true,
             adoptedPokemon,
         });
     } catch (error) {
        
+    }
+};
+
+export const feed = async (req, res, next) => {
+    
+    try {
+        const adoptedPokemon = await Adopted.findById(req.params.id);
+
+
+        adoptedPokemon.healthStatus = 100;
+        await adoptedPokemon.save();
+
+        res.status(200).json({
+            success: true,
+            message: "Feeded Successfully",
+        });
+    } catch (error) {
+        
     }
 };
