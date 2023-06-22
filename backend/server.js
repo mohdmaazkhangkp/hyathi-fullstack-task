@@ -3,6 +3,6 @@ import { connectDB } from "./data/database.js";
 
 connectDB();
 
-app.listen(5000, () => {
+app.listen(process.env.port, () => {
     console.log('server wokring');
 })
