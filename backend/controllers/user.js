@@ -40,8 +40,8 @@ export const register = async (req, res) => {
 
  export const logout = (req,res)=>{
     res.status(200).cookie("token", "", {expires: new Date(Date.now()),
-        sameSite: 'None', // Set SameSite attribute to None
-        secure: true // Set secure flag for secure connections
+        sameSite: process.env.NODE_ENV === "Development" ? "lax" : "none",
+        secure: process.env.NODE_ENV === "Development" ? false : true,
     })
     .json({
         success: true,
