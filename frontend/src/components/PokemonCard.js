@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, Grid, Typography } from '@mui/material'
+import { Button, Card, CardActions, CardContent, Grid, LinearProgress, Typography } from '@mui/material'
 import axios from 'axios';
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
@@ -6,6 +6,7 @@ import { server } from '..';
 
 const PokemonCard = ({ name, breed, age, healthStatus, isAllPage, _id }) => {
     const [adopted, setAdopted] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [healthStatusHere, setHealthStatusHere] = useState(healthStatus);
 
     const adpotHandler = async()=>{
@@ -37,6 +38,7 @@ const PokemonCard = ({ name, breed, age, healthStatus, isAllPage, _id }) => {
     const feedHandler = async()=>{
         
         try {
+            setLoading(true);
             const { data } = await axios.put(
                 `${server}/pokemon/${_id}`,
                 {},
@@ -44,7 +46,8 @@ const PokemonCard = ({ name, breed, age, healthStatus, isAllPage, _id }) => {
                     withCredentials: true,
                 }
             );
-            setHealthStatusHere(100)
+            setHealthStatusHere(prev=> prev+20>100?100:prev+20)
+            setLoading(false);
             toast.success(data.message);
 
         } catch (error) {
@@ -53,6 +56,7 @@ const PokemonCard = ({ name, breed, age, healthStatus, isAllPage, _id }) => {
     }
   return (
       <Grid item xs={12} sm={6} md={4}>
+          
           <Card
               sx={{ height: '100%', display: 'flex', flexDirection: 'column', backgroundColor:"#f2f7ff" }}
           >
@@ -69,17 +73,18 @@ const PokemonCard = ({ name, breed, age, healthStatus, isAllPage, _id }) => {
                       age:{age}
                      
                   </Typography>
-                  <Typography>
+                  <LinearProgress sx={{ width: "80%", height: "8px", marginTop: "10px" }} color={"success"} variant="determinate" value={healthStatusHere} />
+                  {/* <Typography>
                       
                       healthStatus: {healthStatusHere}
-                  </Typography>
+                  </Typography> */}
               </CardContent>
               {isAllPage ? (<CardActions>
                   <Button disabled={adopted} onClick={adpotHandler} variant="contained" size="medium" sx={{width:"100%"}}>Adopt</Button>
               </CardActions>):
               (
                       <CardActions>
-                          <Button onClick={feedHandler}  variant="contained" size="medium" sx={{ width: "100%" }}>Feed</Button>
+                          <Button disabled={loading || healthStatusHere ==100} onClick={feedHandler}  variant="contained" size="medium" sx={{ width: "100%" }}>Feed</Button>
                       </CardActions>
               )}
           </Card>

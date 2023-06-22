@@ -35,6 +35,7 @@ const AllPage = () => {
       <Typography textAlign="center" gutterBottom variant="h4" component="h2"mb={4}>
         All Available Pokemon
       </Typography>
+      
       {allPokemon.length > 0 ? <Grid container spacing={4}>
         {allPokemon.map((p) => (
           <PokemonCard key={p.name} {...p} isAllPage={true} />

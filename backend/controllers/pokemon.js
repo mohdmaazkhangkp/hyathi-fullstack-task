@@ -52,7 +52,8 @@ export const feed = async (req, res, next) => {
         const adoptedPokemon = await Adopted.findById(req.params.id);
 
 
-        adoptedPokemon.healthStatus = 100;
+        adoptedPokemon.healthStatus + 20 > 100 ? adoptedPokemon.healthStatus = 100 : adoptedPokemon.healthStatus += 20;
+        adoptedPokemon.createdAt = Date.now();
         await adoptedPokemon.save();
 
         res.status(200).json({
