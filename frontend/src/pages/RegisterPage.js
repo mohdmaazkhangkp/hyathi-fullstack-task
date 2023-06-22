@@ -31,6 +31,7 @@ const RegisterPage = () => {
     useContext(Context);
 
   const [loading, setLoading] = useState()
+  
   const handleSubmit = async(event) => {
     event.preventDefault();
     setLoading(true);

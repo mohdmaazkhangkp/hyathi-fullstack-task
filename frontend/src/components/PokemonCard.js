@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, Grid, LinearProgress, Typography } from '@mui/material'
+import { Box, Button, Card, CardActions, CardContent, Grid, LinearProgress, Typography } from '@mui/material'
 import axios from 'axios';
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
@@ -46,7 +46,7 @@ const PokemonCard = ({ name, breed, age, healthStatus, isAllPage, _id }) => {
                     withCredentials: true,
                 }
             );
-            setHealthStatusHere(prev=> prev+20>100?100:prev+20)
+            setHealthStatusHere(prev=> prev+10>100?100:prev+10)
             setLoading(false);
             toast.success(data.message);
 
@@ -70,14 +70,15 @@ const PokemonCard = ({ name, breed, age, healthStatus, isAllPage, _id }) => {
                       
                   </Typography>
                   <Typography>
-                      age:{age}
+                      age: {age}
                      
                   </Typography>
-                  <LinearProgress sx={{ width: "80%", height: "8px", marginTop: "10px" }} color={"success"} variant="determinate" value={healthStatusHere} />
-                  {/* <Typography>
-                      
-                      healthStatus: {healthStatusHere}
-                  </Typography> */}
+                  <Box width="100%" sx={{ display: "flex", marginTop: "10px", alignItems:"center", gap:"10px" }}>
+                  <Typography>
+                      Health:
+                  </Typography>
+                      <LinearProgress sx={{ width: "70%", height: "8px", }} color={"success"} variant="determinate" value={healthStatusHere} />
+                  </Box>
               </CardContent>
               {isAllPage ? (<CardActions>
                   <Button disabled={adopted} onClick={adpotHandler} variant="contained" size="medium" sx={{width:"100%"}}>Adopt</Button>
