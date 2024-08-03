@@ -4,7 +4,6 @@ import express from 'express';
 import userRouter from "./routes/user.js"
 import pokemonRouter from "./routes/pokemon.js"
 import cors from "cors"
-import { User } from './models/user.js';
 import { Adopted } from './models/adopted.js';
 import cron from 'node-cron'
 export const app = express();
@@ -27,7 +26,6 @@ app.use(cookieParser());
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/pokemon", pokemonRouter);
 
-// logic to decrease health of each pokemon after every 24 hours if not feeded
 const checkFeedStatus = async ()=>{
     const adoptedPokemons = await Adopted.find();
  
@@ -45,13 +43,9 @@ const updatePokemonHealth = async (id) =>{
     
     await pokemonToUpdate.save();
 }
+
 cron.schedule('* * * * *', checkFeedStatus);
 
-
-
-
-
-// using routes
 app.get("/", (req,res)=>{
     res.send("Home")
 })
