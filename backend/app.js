@@ -6,7 +6,7 @@ import pokemonRouter from "./routes/pokemon.js"
 import cors from "cors"
 import { User } from './models/user.js';
 import { Adopted } from './models/adopted.js';
-
+import cron from 'node-cron'
 export const app = express();
 
 config({
@@ -30,22 +30,22 @@ app.use("/api/v1/pokemon", pokemonRouter);
 // logic to decrease health of each pokemon after every 24 hours if not feeded
 const checkFeedStatus = async ()=>{
     const adoptedPokemons = await Adopted.find();
-    console.log(adoptedPokemons);
+ 
     for (let adoptedPokemon of adoptedPokemons){
-        const timeDifference = Math.abs(Date.now() - adoptedPokemon.createdAt); // Calculate the absolute difference in milliseconds
-        const isGreaterThan24Hours = timeDifference > 1000 * 60 * 60 * 24; // Check if the difference is greater than 24 hours
-        if (isGreaterThan24Hours) await updatePokemonHealth(adoptedPokemon._id) 
+        const timeDifference = Math.abs(Date.now() - adoptedPokemon.createdAt); 
+        if (timeDifference > 1000 * 60 && adoptedPokemon?.healthStatus>0 && adoptedPokemon?.healthStatus<100){
+            await updatePokemonHealth(adoptedPokemon._id);
+        } 
     }
 }
 
 const updatePokemonHealth = async (id) =>{
     const pokemonToUpdate = await Adopted.findById(id);
-    pokemonToUpdate.healthStatus -= 25;
+    pokemonToUpdate.healthStatus>=25 ? pokemonToUpdate.healthStatus -= 25 : pokemonToUpdate.healthStatus=0;
     
     await pokemonToUpdate.save();
 }
-// Call the checkFeedStatus function after every hour
-setInterval(checkFeedStatus, 1000 * 60 * 60); 
+cron.schedule('* * * * *', checkFeedStatus);
 
 
 
